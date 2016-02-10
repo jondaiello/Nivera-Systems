@@ -11,6 +11,13 @@
 @import "variables";
 @import "mixins";
 
+a {
+  color: darken($brand-primary, 10);
+
+  &:hover {
+    color: darken($brand-primary, 30);
+  }
+}
 
 //
 // Buttons
@@ -46,8 +53,8 @@
 
 // Mixin for generating new styles
 @mixin btn-styles($btn-color: #555) {
-  @include gradient-vertical($start-color: $btn-color, $end-color: darken($btn-color, 12%));
-  @include reset-filter; // Disable gradients for IE9 because filter bleeds through rounded corners; see https://github.com/twbs/bootstrap/issues/10620
+  //@include gradient-vertical($start-color: $btn-color, $end-color: darken($btn-color, 12%));
+  //@include reset-filter; // Disable gradients for IE9 because filter bleeds through rounded corners; see https://github.com/twbs/bootstrap/issues/10620
   background-repeat: repeat-x;
   border-color: darken($btn-color, 14%);
 
@@ -148,18 +155,35 @@
 
 // Inverted navbar
 .navbar-inverse {
-  @include gradient-vertical($start-color: lighten($navbar-inverse-bg, 10%), $end-color: $navbar-inverse-bg);
-  @include reset-filter; // Remove gradient in IE<10 to fix bug where dropdowns don't get triggered; see https://github.com/twbs/bootstrap/issues/10257
+  //@include gradient-vertical($start-color: lighten($navbar-inverse-bg, 10%), $end-color: $navbar-inverse-bg);
+  //@include reset-filter; // Remove gradient in IE<10 to fix bug where dropdowns don't get triggered; see https://github.com/twbs/bootstrap/issues/10257
+  background: #e7eaec;
   border-radius: $navbar-border-radius;
+  border: 0;
+
   .navbar-nav > .open > a,
   .navbar-nav > .active > a {
-    @include gradient-vertical($start-color: $navbar-inverse-link-active-bg, $end-color: lighten($navbar-inverse-link-active-bg, 2.5%));
-    @include box-shadow(inset 0 3px 9px rgba(0,0,0,.25));
+    //@include gradient-vertical($start-color: $navbar-inverse-link-active-bg, $end-color: lighten($navbar-inverse-link-active-bg, 2.5%));
+    //@include box-shadow(inset 0 3px 9px rgba(0,0,0,.25));
+    //background: darken(#e7eaec, 10%);
+    background: transparent;
+    color: #161041;
+
+    &:hover {
+      background: transparent;
+      color: #161041;
+    }
   }
 
   .navbar-brand,
   .navbar-nav > li > a {
-    text-shadow: 0 -1px 0 rgba(0,0,0,.25);
+    text-shadow: none;
+    transition: .2s all;
+
+    &:hover {
+      color: #161041;
+      background: transparent;
+    }
   }
 }
 
@@ -288,4 +312,75 @@
   border-color: darken($well-bg, 10%);
   $shadow: inset 0 1px 3px rgba(0,0,0,.05), 0 1px 0 rgba(255,255,255,.1);
   @include box-shadow($shadow);
+}
+
+
+
+.jumbotron {
+  padding-top:    $jumbotron-padding;
+  padding-bottom: $jumbotron-padding;
+  margin-bottom: $jumbotron-padding;
+  color: $jumbotron-color;
+  background-color: $jumbotron-bg;
+  text-align: left;
+
+  h1,
+  .h1 {
+    color: $jumbotron-heading-color;
+  }
+
+  p {
+    margin-bottom: ($jumbotron-padding / 2);
+    font-size: $jumbotron-font-size;
+    font-weight: 200;
+  }
+
+  > hr {
+    border-top-color: darken($jumbotron-bg, 10%);
+  }
+
+  .container &,
+  .container-fluid & {
+    border-radius: $border-radius-large; // Only round corners at higher resolutions if contained in a container
+    padding-left:  2.5%; //($grid-gutter-width / 2);
+    padding-right: 2.5%; //($grid-gutter-width / 2);
+  }
+
+  .container {
+    max-width: 100%;
+  }
+
+  @media screen and (min-width: $screen-sm-min) {
+    padding-top:    ($jumbotron-padding * 1.6);
+    padding-bottom: ($jumbotron-padding * 1.6);
+
+    .container &,
+    .container-fluid & {
+      padding-left:  2.5%; //($jumbotron-padding * 2);
+      padding-right: 2.5%; //($jumbotron-padding * 2);
+      max-width: 1215px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    h1,
+    .h1 {
+      font-size: $jumbotron-heading-font-size;
+    }
+  }
+}
+
+
+.home-top {
+  background: #efefef url('/images/bg-city-sm.jpg') no-repeat center center;
+  background-size: cover;
+  width: 100%;
+}
+
+@media all and (min-width: 600px) {
+  .home-top { background-image: url('/images/bg-city-md.jpg'); }
+}
+
+@media all and (min-width: 960px) {
+  .home-top { background-image: url('/images/bg-city-lg.jpg'); }
 }
