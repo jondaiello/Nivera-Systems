@@ -8,11 +8,52 @@
 // Load core variables and mixins
 // --------------------------------------------------
 
+@import url(https://fonts.googleapis.com/css?family=Montserrat|Source+Sans+Pro:400,700,400italic,700italic);
+@import url(/fonts/font-awesome/css/font-awesome.min.css);
+//font-family: 'Montserrat', sans-serif;
+//font-family: 'Source Sans Pro', sans-serif;
+
+$brand-primary: #6fb544;
+$brand-secondary: #161041;
+$brand-accent: #bcbec0;
+
+body {
+  font-family: 'Source Sans Pro', sans-serif;
+  line-height: 1.8em;
+}
+
+.wrap > .container {
+  padding-top: 30px;
+}
+
+.navbar, h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6, .control-label {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 100;
+}
+
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
+  color: $brand-secondary;
+}
+
 @import "variables";
 @import "mixins";
 
+.form-control {
+  border-radius: 0;
+}
+
+.control-label {
+  color: #777;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: normal;
+  margin-bottom: 0;
+  font-size: .8em;
+}
+
 a {
   color: darken($brand-primary, 10);
+  transition: .2s all;
 
   &:hover {
     color: darken($brand-primary, 30);
@@ -87,16 +128,45 @@ a {
 
 // Common styles
 .btn {
+  border-radius: 0;
+  transition: .2s all;
+
   // Remove the gradient for the pressed/active state
   &:active,
   &.active {
     background-image: none;
   }
+
+  &:hover {
+
+  }
 }
 
 // Apply the mixin to the buttons
 .btn-default { @include btn-styles($btn-default-bg); text-shadow: 0 1px 0 #fff; border-color: #ccc; }
-.btn-primary { @include btn-styles($btn-primary-bg); }
+.btn-primary {
+  @include btn-styles($btn-primary-bg);
+  border: 1px solid $brand-primary;
+  background: #fff;
+  color: $brand-primary;
+  text-shadow: none;
+  transition: .2s all;
+
+  &:hover {
+    background: $brand-primary;
+    border-color: $brand-primary;
+  }
+}
+.btn-white {
+  border: 1px solid #fff;
+  color: #fff;
+  background: transparent;
+
+  &:hover {
+    color: #fff;
+    background: rgba(255,255,255,.2);
+  }
+}
 .btn-success { @include btn-styles($btn-success-bg); }
 .btn-info    { @include btn-styles($btn-info-bg); }
 .btn-warning { @include btn-styles($btn-warning-bg); }
@@ -148,18 +218,35 @@ a {
     @include box-shadow(inset 0 3px 9px rgba(0,0,0,.075));
   }
 }
+
 .navbar-brand,
 .navbar-nav > li > a {
   text-shadow: 0 1px 0 rgba(255,255,255,.25);
 }
+
+.navbar-nav {
+  height: auto;
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 1px;
+
+  li {
+    a {
+      padding: 28px 1em;
+    }
+  }
+}
+
 
 // Inverted navbar
 .navbar-inverse {
   //@include gradient-vertical($start-color: lighten($navbar-inverse-bg, 10%), $end-color: $navbar-inverse-bg);
   //@include reset-filter; // Remove gradient in IE<10 to fix bug where dropdowns don't get triggered; see https://github.com/twbs/bootstrap/issues/10257
   background: #e7eaec;
+  background: #fff;
   border-radius: $navbar-border-radius;
   border: 0;
+  box-shadow: 0 0 15px 0 rgba(0,0,0,.15);
 
   .navbar-nav > .open > a,
   .navbar-nav > .active > a {
@@ -181,8 +268,41 @@ a {
     transition: .2s all;
 
     &:hover {
-      color: #161041;
+      color: $brand-primary;
       background: transparent;
+    }
+  }
+
+  .navbar-brand {
+    display: block;
+    max-width: 280px;
+    height: auto;
+
+    img {
+      width: 100%;
+      display: block;
+    }
+  }
+
+  .navbar-toggle {
+    border: 0;
+    padding: 9px 7px;
+    margin-top: 20px;
+    background: transparent;
+
+    .icon-bar {
+      background: $brand-primary;
+      transition: .2s all;
+      height: 3px;
+    }
+
+    &:hover {
+      background: transparent;
+
+      .icon-bar {
+        background: $brand-primary;
+        background: $brand-secondary;
+      }
     }
   }
 }
@@ -267,6 +387,7 @@ a {
   border-radius: $border-radius-base;
   @include box-shadow(0 1px 2px rgba(0,0,0,.075));
 }
+
 .list-group-item.active,
 .list-group-item.active:hover,
 .list-group-item.active:focus {
@@ -317,12 +438,13 @@ a {
 
 
 .jumbotron {
-  padding-top:    $jumbotron-padding;
-  padding-bottom: $jumbotron-padding;
+  padding-top:    15vh;
+  padding-bottom: 15vh;
+  margin-top: 20px;
   margin-bottom: $jumbotron-padding;
   color: $jumbotron-color;
   background-color: $jumbotron-bg;
-  text-align: left;
+  //text-align: left;
 
   h1,
   .h1 {
@@ -351,8 +473,6 @@ a {
   }
 
   @media screen and (min-width: $screen-sm-min) {
-    padding-top:    ($jumbotron-padding * 1.6);
-    padding-bottom: ($jumbotron-padding * 1.6);
 
     .container &,
     .container-fluid & {
@@ -373,14 +493,37 @@ a {
 
 .home-top {
   background: #efefef url('/images/bg-city-sm.jpg') no-repeat center center;
+  background-image: url('/images/touch-screen-blur.jpg');
   background-size: cover;
   width: 100%;
+  box-shadow: inset 0 0 1000px 0 rgba(0,0,0,.5);
+}
+
+.wrap > .container {
+  padding-top: 100px;
 }
 
 @media all and (min-width: 600px) {
-  .home-top { background-image: url('/images/bg-city-md.jpg'); }
+  .home-top { background-image: url('/images/bg-city-md.jpg'); background-image: url('/images/touch-screen-blur.jpg'); }
 }
 
 @media all and (min-width: 960px) {
-  .home-top { background-image: url('/images/bg-city-lg.jpg'); }
+  .home-top { background-image: url('/images/bg-city-lg.jpg'); background-image: url('/images/touch-screen-blur.jpg'); }
+}
+
+.icon-margin {
+  margin: 20px auto;
+}
+
+.icon-accent-color {
+  color: $brand-accent;
+}
+
+.footer {
+  background: #eaeaea;
+  margin-top: 50px;
+
+  a {
+    color: $brand-secondary;
+  }
 }
